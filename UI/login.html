@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>EPIC Mail | Login</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/login.css">
+    <link href="https://fonts.googleapis.com/css?family=Fondamento|Roboto|Josefin+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  </head>
+  <body>
+      <header class="navbar">
+        <span class="navbar-toggle" id="js-navbar-toggle">
+          <i class="fas fa-bars"></i>
+        </span>
+        <a href="index.html" class="logo">EPIC Mail</a>
+        <ul class="main-nav" id="js-menu">
+          <!-- <li>
+            <a href="index.html" class="nav-links">Home</a>
+          </li> -->
+          <li>
+            <a href="login.html" class="nav-links">Login</a>
+          </li>
+          <li>
+            <a href="signup.html" class="nav-links">Sign up</a>
+          </li>
+          </li>
+        </ul>
+      </header>
+      <div class="form container">
+        <h2>Login</h2>
+        <p>You have to login to be able to use our service</p>
+          <form onsubmit="login(event)">
+            <div class="form-group">
+              <label for="Email" class="form-label">Email:</label>
+              <input id="login-email" class="form-input" type="text" placeholder="Enter email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="Password" class="form-label">Password:</label>
+              <input id="login-password" class="form-input" type="password" placeholder="Enter password" name="password"
+                required>
+            </div>
+            <p>Don't have an account?<a href="#">Signup here</a></p>
+            <div class="btn">
+              <button type="submit" id="submit">Login</button>
+            </div>
+          </form>
+          
+        </div>
+      <footer class="foot">
+        <div>
+          <p>Copyright &copy; 2019. All Rights Reserved</p>
+        </div>
+      </footer>
+      <script src="./js/main.js"></script>
+    </body>
+</html>
