@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>EPIC Mail | Signup</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/login.css">
+    <link href="https://fonts.googleapis.com/css?family=Fondamento|Roboto|Josefin+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  </head>
+  <body>
+      <header class="navbar">
+        <span class="navbar-toggle" id="js-navbar-toggle">
+          <i class="fas fa-bars"></i>
+        </span>
+        <a href="index.html" class="logo">EPIC Mail</a>
+        <ul class="main-nav" id="js-menu">
+          <li>
+            <a href="login.html" class="nav-links">Login</a>
+          </li>
+          <li>
+            <a href="signup.html" class="nav-links">Sign up</a>
+          </li>
+          </li>
+        </ul>
+      </header>
+      <div class="form container">
+        <div class="top">
+          <h2>Sign Up</h2>
+          <p>Create an account and enjoy our services!</p>
+        </div>
+          <form onsubmit="signup(event)">
+              <div class="form-group">
+                  <label for="Firstname" class="form-label">First Name:</label>
+                  <input id="signup-firstname" class="form-input" type="text" placeholder="Enter First Name" name="firstname" required>
+                </div>
+                <div class="form-group">
+                    <label for="Lirstname" class="form-label">Last Name:</label>
+                    <input id="signup-lastname" class="form-input" type="text" placeholder="Enter Last Name" name="lastname" required>
+                  </div>
+                  <!-- <div class="form-group">
+                      <label for="Username" class="form-label">User Name:</label>
+                      <input id="signup-username" class="form-input" type="text" placeholder="Enter User Name" name="username" required>
+                    </div> -->
+            <div class="form-group">
+              <label for="Email" class="form-label">Email Address:</label>
+              <input id="signup-email" class="form-input" type="text" placeholder="Enter email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="Password" class="form-label">Password:</label>
+              <input id="signup-password" class="form-input" type="password" placeholder="Enter password" name="password"
+                required>
+            </div>
+            <div class="form-group">
+                <label for="CPassword" class="form-label">Confirm Password:</label>
+                <input id="signup-cpassword" class="form-input" type="password" placeholder="Confirm password" name="cpassword"
+                  required>
+              </div>
+            <p>Already have an account?<a href="./login.html">Login</a></p>
+            <div class="btn">
+              <button type="submit" id="submit">Sign Up</button>
+            </div>
+          </form>
+          
+        </div>
+      <footer class="footer-signup">
+        <div>
+          <p>Copyright &copy; 2019. All Rights Reserved</p>
+        </div>
+      </footer>
+      <script src="./js/main.js"></script>
+    </body>
+</html>
