@@ -43,7 +43,12 @@
         <i class="fas fa-bars"></i>
       </span>
       <a href="index.html" class="logo">EPIC Mail</a>
-      <ul class="main-nav" id="js-menu">
+      <!-- <div> -->
+      <!-- <i class="fas fa-search"></i> -->
+      <input class="search" type="text" placeholder="Search..." />
+      <!-- <i class="far fa-user-circle fa-2x"></i> -->
+      <!-- </div> -->
+      <!-- <ul class="main-nav" id="js-menu">
         <li>
           <a href="index.html" class="nav-links">Home</a>
         </li>
@@ -53,17 +58,30 @@
         <li>
           <a href="signup.html" class="nav-links">Sign up</a>
         </li>
-      </ul>
+      </ul> -->
     </header>
     <div class="flexbox-container">
       <nav class="sidebar">
         <div class="options">
-          <div><a href="compose">Compose message</a></div>
-          <div><a href="#Inbox">Inbox</a></div>
-          <div><a href="#clients">Drafts</a></div>
-          <div><a href="#clients">Create Groups</a></div>
-          <div><a href="#clients">Sent Items</a></div>
-          <div><a href="#clients">Deleted Items</a></div>
+          <div class="icon">
+            <i class="fas fa-user-circle fa-3x"></i>
+          </div>
+          <div>
+            <i class="far fa-plus-square"></i>
+            <a href="#compose">Compose message</a>
+          </div>
+          <div><i class="fas fa-inbox"></i> <a href="#Inbox">Inbox</a></div>
+          <div><i class="fas fa-archive"></i> <a href="#Drafts">Drafts</a></div>
+          <div>
+            <i class="fas fa-users"></i> <a href="#Create">Create Groups</a>
+          </div>
+          <div>
+            <i class="fas fa-share-square"></i> <a href="#Sent">Sent Items</a>
+          </div>
+          <div>
+            <i class="far fa-trash-alt"></i>
+            <a href="#Deleted">Deleted Items</a>
+          </div>
         </div>
 
         <!-- <a href="#about">Compose message</a>
