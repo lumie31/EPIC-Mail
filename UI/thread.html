@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>EPIC Mail | Read Message</title>
+    <!-- <link rel="stylesheet" href="./css/style.css" /> -->
+    <!-- <link rel="stylesheet" href="./css/login.css" /> -->
+    <link rel="stylesheet" href="./css/dashboard.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Fondamento|Roboto|Josefin+Sans"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous"
+    />
+    <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=ntoxt89xgrm1168vd48n20ib35ghf71057q9w3k1f76d2nh6"></script>
+    <script>
+      tinymce.init({ selector: "textarea" });
+    </script>
+    <style>
+      .msg {
+        /* margin-top: 20vh; */
+        /* margin-bottom: 20px; */
+        border-radius: 5px;
+        margin: 0 auto;
+        width: 100%;
+        padding: 20px;
+        margin-bottom: 5px;
+        background: gainsboro;
+        display: flex;
+        justify-content: space-between;
+        /* box-shadow: 1px 8px 24px 4px rgba(86, 91, 115, 0.15); */
+      }
+
+      .compose-form-content {
+        padding: 12px 8px;
+        margin: 10px 0;
+        /* font-size: 14px; */
+      }
+
+      .compose-form-content input {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        width: 100%;
+        padding: 8px 8px;
+        margin: 5px 0;
+      }
+
+      button[type="submit"] {
+        text-align: center;
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        margin: 8px 0;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      button:hover {
+        opacity: 0.8;
+      }
+      .text {
+        padding-left: 2em;
+      }
+
+      hr {
+        border: 1px solid black;
+      }
+      /* .msg1 {
+        margin-top: 1rem
+      } */
+    </style>
+  </head>
+  <body>
+    <header class="navbar">
+      <span class="navbar-toggle" id="js-navbar-toggle">
+        <i class="fas fa-bars"></i>
+      </span>
+      <a href="index.html" class="logo">EPIC Mail</a>
+      <input class="search" type="text" placeholder="Search..." />
+    </header>
+    <div class="flexbox-container">
+      <nav class="sidebar">
+        <div class="options">
+          <div class="icon">
+            <i class="fas fa-user-circle fa-3x"></i>
+          </div>
+          <div>
+            <i class="far fa-plus-square"></i>
+            <a href="#compose">Compose message</a>
+          </div>
+          <div><i class="fas fa-inbox"></i> <a href="#Inbox">Inbox</a></div>
+          <div><i class="fas fa-archive"></i> <a href="#Drafts">Drafts</a></div>
+          <div>
+            <i class="fas fa-users"></i> <a href="#Create">Create Groups</a>
+          </div>
+          <div>
+            <i class="fas fa-share-square"></i> <a href="#Sent">Sent Items</a>
+          </div>
+          <div>
+            <i class="far fa-trash-alt"></i>
+            <a href="#Deleted">Deleted Items</a>
+          </div>
+        </div>
+      </nav>
+      <article class="main">
+        <form onsubmit="compose(event)">
+          <div class="msg">
+            <div><i class="far fa-user fa-2x"></i></div>
+            <div>
+              <p class="text">
+                It is a long established fact that a reader will be distracted
+                by the readable content It is a long established fact that a
+                reader will be distracted by the readable content It is a long
+                established fact that a reader will be distracted by the
+                readable content
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div class="msg">
+            <div>
+              <p class="text">
+                It is a long established fact that a reader will be distracted
+                by the readable content It is a long established
+              </p>
+            </div>
+            <div><i class="far fa-user fa-2x"></i></div>
+          </div>
+          <div class="msg">
+            <div>
+              <p class="text">
+                It is a long established fact that a reader will be distracted
+                by the readable content It is a long established
+              </p>
+            </div>
+            <div><i class="fas fa-user-ninja fa-2x"></i></div>
+          </div>
+        </form>
+      </article>
+    </div>
+    <footer class="foot">
+      <div>
+        <p>Copyright &copy; 2019. All Rights Reserved</p>
+      </div>
+    </footer>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
