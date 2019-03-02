@@ -1,0 +1,24 @@
+{
+  "name": "epicmail",
+  "version": "1.0.0",
+  "description": "A web application that helps people exchange messages/information over the internet",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lumie31/EPIC-Mail.git"
+  },
+  "author": "Olumide",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lumie31/EPIC-Mail/issues"
+  },
+  "homepage": "https://github.com/lumie31/EPIC-Mail#readme",
+  "devDependencies": {
+    "eslint": "^5.15.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  }
+}
