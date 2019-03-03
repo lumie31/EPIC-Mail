@@ -1,10 +1,6 @@
 import Users from '../models/users';
-/**
- * Creates a new user.
- * @class user
- */
 
-class UserControllers {
+class UserController {
   /**
    * Creates a user
    * * @api {post} /api/user Create user
@@ -62,6 +58,41 @@ class UserControllers {
       user: data,
     });
   }
+
+  /**
+   * signin a user
+   * * @api {post} /api/user signin user
+   *
+   * @param {object} request - Request object
+   * @param {object} response - Response object
+   * @returns {json} created object
+   * @memberof userControllers
+   */
+
+  static signin(request, response) {
+    const { email, password } = request.body;
+    if (!email) {
+      return response.status(400).json({
+        message: 'Email is required',
+      });
+    }
+    if (!password) {
+      return response.status(400).json({
+        message: 'Password is required',
+      });
+    }
+
+    const User = Users.find(user => user.email === request.body.email);
+    if (User) {
+      return response.status(200).json({
+        message: 'Successfully signed in',
+        User,
+      });
+    }
+    return response.status(404).json({
+      message: 'User not found',
+    });
+  }
 }
 
-export default UserControllers;
+export default UserController;
