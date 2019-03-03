@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import UserController from './dummyApi/controllers/userController';
+import MessageController from './dummyApi/controllers/messageController';
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.get('/', (req, res) => {
 
 app.post('/auth/signup', UserController.createUser);
 app.post('/auth/login', UserController.signin);
+app.get('/messages', MessageController.allReceivedEmails);
 
 app.listen(port, () => {
   console.log('server started');
