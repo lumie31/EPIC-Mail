@@ -23,6 +23,14 @@ const Messages = [
     parentMessageId: 3,
     status: 'sent',
   },
+  {
+    id: 4,
+    createdOn: new Date(),
+    subject: 'Holla',
+    message: 'Would like to get to know you ma',
+    parentMessageId: 3,
+    status: 'unread',
+  },
 ];
 
 export default Messages;
