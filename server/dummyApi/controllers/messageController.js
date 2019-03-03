@@ -26,7 +26,7 @@ class MessageController {
   /**
    * @description Gets all unread emails for a user
    *
-   * @static allUnreadEmail
+   * @static allUnreadEmails
    * @param {object} request Request object
    * @param {object} response Response object
    * @memberof messageController
@@ -38,6 +38,29 @@ class MessageController {
     if (messages) {
       return response.status(200).json({
         message: 'Unread emails',
+        messages,
+      });
+    }
+    return response.status(404).json({
+      message: 'Not found',
+    });
+  }
+
+  /**
+   * @description Gets all sent emails by a user
+   *
+   * @static allSentEmails
+   * @param {object} request Request object
+   * @param {object} response Response object
+   * @memberof messageController
+   * @returns {object} List of all sent emails
+   */
+
+  static allSentEmails(request, response) {
+    const messages = Messages.find(message => message.status === 'sent');
+    if (messages) {
+      return response.status(200).json({
+        message: 'Sent emails',
         messages,
       });
     }
