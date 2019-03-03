@@ -18,6 +18,7 @@ app.post('/auth/signup', UserController.createUser);
 app.post('/auth/login', UserController.signin);
 app.get('/messages', MessageController.allReceivedEmails);
 app.get('/messages/unread', MessageController.allUnreadEmails);
+app.get('/messages/sent', MessageController.allSentEmails);
 
 app.listen(port, () => {
   console.log('server started');
