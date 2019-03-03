@@ -2,24 +2,24 @@ const Users = [
   {
     id: 1,
     email: 'johndoe@gmail.com',
-    firstname: 'John',
-    lastname: 'Doe',
+    firstName: 'John',
+    lastName: 'Doe',
     password: '12345',
   },
 
   {
     id: 2,
     email: 'maryjane@gmail.com',
-    firstname: 'Mary',
-    lastname: 'Jane',
+    firstName: 'Mary',
+    lastName: 'Jane',
     password: '12345',
   },
 
   {
     id: 3,
     email: 'meyou@gmail.com',
-    firstname: 'Me',
-    lastname: 'You',
+    firstName: 'Me',
+    lastName: 'You',
     password: '12345',
   },
 ];
