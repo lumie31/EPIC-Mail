@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 app.post('/auth/signup', UserController.createUser);
 app.post('/auth/login', UserController.signin);
 app.get('/messages', MessageController.allReceivedEmails);
+app.get('/messages/unread', MessageController.allUnreadEmails);
 
 app.listen(port, () => {
   console.log('server started');
