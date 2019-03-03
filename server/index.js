@@ -13,7 +13,8 @@ app.get('/', (req, res) => {
   res.send('hello limue');
 });
 
-app.post('/user', UserController.createUser);
+app.post('/auth/signup', UserController.createUser);
+app.post('/auth/login', UserController.signin);
 
 app.listen(port, () => {
   console.log('server started');
