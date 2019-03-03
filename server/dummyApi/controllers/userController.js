@@ -8,7 +8,7 @@ class UserController {
    * @param {object} request - Request object
    * @param {object} response - Response object
    * @returns {json} created object
-   * @memberof userControllers
+   * @memberof userController
    */
 
   static createUser(request, response) {
@@ -66,7 +66,7 @@ class UserController {
    * @param {object} request - Request object
    * @param {object} response - Response object
    * @returns {json} created object
-   * @memberof userControllers
+   * @memberof userController
    */
 
   static signin(request, response) {
