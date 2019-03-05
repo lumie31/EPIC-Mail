@@ -68,6 +68,54 @@ class MessageController {
       message: 'Not found',
     });
   }
+
+  /**
+   * @description Send email to individuals
+   *
+   * @static sendEmail
+   * @param {object} request Request object
+   * @param {object} response Response object
+   * @memberof messageController
+   * @returns {object} created object
+   */
+
+  static sendEmail(request, response) {
+    const { subject, message } = request.body;
+    if (!subject) {
+      return response.status(400).json({
+        message: 'Subject is required',
+      });
+    }
+    if (!message) {
+      return response.status(400).json({
+        message: 'Message is required',
+      });
+    }
+
+    const data = {
+      id: Messages.length + 1,
+      subject,
+      message,
+      createdOn: new Date(),
+      parentMessageId: 1,
+      status: 'sent',
+    };
+
+    Messages.push(data);
+    return response.status(201).json({
+      status: 201,
+      data: [
+        {
+          id: data.id,
+          subject: data.subject,
+          message: data.message,
+          createdOn: data.createdOn,
+          parentMessageId: data.parentMessageId,
+          status: data.status,
+        },
+      ],
+    });
+  }
 }
 
 export default MessageController;

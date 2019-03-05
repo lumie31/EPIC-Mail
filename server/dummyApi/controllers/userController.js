@@ -1,5 +1,7 @@
 import Users from '../models/users';
+import validateUser from '../middlewares/validateUser';
 
+const userExist = validateUser.checkIfUserExists;
 class UserController {
   /**
    * Creates a user
@@ -53,9 +55,18 @@ class UserController {
     };
 
     Users.push(data);
-    return response.status(200).json({
-      message: 'user created',
-      user: data,
+    // if (userExist) {
+    //   return response.status(409).json({
+    //     status: 409,
+    //     error: 'User already exists',
+    //   });
+    // }
+    return response.status(201).json({
+      status: 201,
+      data: [{
+        token: 'xyz123',
+        data,
+      }],
     });
   }
 
@@ -85,11 +96,16 @@ class UserController {
     const User = Users.find(user => user.email === request.body.email);
     if (User) {
       return response.status(200).json({
-        message: 'Successfully signed in',
-        User,
+        status: 200,
+        data: [{
+          token: 'xyz123',
+          User,
+        },
+        ],
       });
     }
     return response.status(404).json({
+      status: 404,
       message: 'User not found',
     });
   }
