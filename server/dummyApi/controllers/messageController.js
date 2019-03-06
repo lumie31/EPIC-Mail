@@ -118,6 +118,27 @@ class MessageController {
   }
 
   /**
+  * @method getSpecificEmail
+  * @description Get a specific user's email
+  * @static
+  * @param {object} req - The request object
+  * @param {object} res - The response object
+  * @returns {object} JSON response
+  * @memberof MessageController
+  */
+
+  static getSpecificEmail(request, response) {
+    const { id } = request.params;
+
+    const mail = Messages.find(message => message.id === parseInt(id, 10));
+
+    return response.status(200).send({
+      status: 200,
+      data: mail,
+    });
+  }
+
+  /**
   * @method deleteMessage
   * @description Delete a specific messages
   * @static

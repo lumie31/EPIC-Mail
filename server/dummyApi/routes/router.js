@@ -14,11 +14,12 @@ router.post(
   validateUser.validateSignup,
   UserController.createUser,
 );
-router.post('/auth/login', validateUser.validateLogin, UserController.signin);
+router.post('/messages', MessageController.sendEmail);
 router.get('/messages', MessageController.allReceivedEmails);
 router.get('/messages/unread', MessageController.allUnreadEmails);
 router.get('/messages/sent', MessageController.allSentEmails);
-router.post('/messages', MessageController.sendEmail);
+router.get('/messages/:id', MessageController.getSpecificEmail);
+router.post('/auth/login', validateUser.validateLogin, UserController.signin);
 router.delete('/messages/:id', MessageController.deleteMessage);
 
 export default router;
