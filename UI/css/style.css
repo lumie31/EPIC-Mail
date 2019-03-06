@@ -11,7 +11,7 @@ html {
 }
 
 .banner {
-  background-image: url("../assets/dribble_mail.jpg");
+  background-image: url("../assets/flyingmail.png");
   height: 500px;
   width: 100%;
   background-position: center;
@@ -30,14 +30,22 @@ html {
 }
 .navbar {
   font-size: 18px;
-  background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  background:#2676AF;
+  /* background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%); */
+  /* border: 1px solid rgba(0, 0, 0, 0.2); */
   padding-bottom: 10px;
 }
 
 .main-nav {
   list-style-type: none;
   display: none;
+}
+.card h3 {
+  padding: 5px 0px;
+}
+
+.card i, h3{
+  color: #2676AF;
 }
 
 .nav-links,
@@ -73,8 +81,16 @@ html {
 .feature-header {
   text-align: center;
   padding: 2em;
+  margin-bottom: 20px;
+  background: #2676AF;
+  color: #fff;
+  /* border: 1px solid rgba(0, 0, 0, 0.2); */
+
 }
 
+.features {
+  padding-bottom: 20px;
+}
 .feature-header p {
   padding-top: 0.5em;
 }
@@ -94,7 +110,7 @@ html {
   /* float: left; */
   width: calc(33.33333333% - 30px);
   /* width: 30%; */
-  padding: 0 10px;
+  padding: 0 20px;
   display: inline-block;
 }
 
@@ -119,8 +135,10 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  background:#2676AF;
+
+  /* background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%); */
+  /* border: 1px solid rgba(0, 0, 0, 0.2); */
 }
 
 @media all and (max-width: 420px) {

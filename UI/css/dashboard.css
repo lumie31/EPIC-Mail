@@ -16,8 +16,9 @@ html {
 } */
 .navbar {
   font-size: 18px;
-  background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  background:#2676AF;
+  /* background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%); */
+  /* border: 1px solid rgba(0, 0, 0, 0.2); */
   padding-bottom: 10px;
 }
 .main-nav {
@@ -112,8 +113,9 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  background:#2676AF;
+  /* background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%); */
+  /* border: 1px solid rgba(0, 0, 0, 0.2); */
 }
 
 /* mobile layout */

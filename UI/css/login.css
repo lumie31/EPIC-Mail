@@ -1,4 +1,5 @@
 input[type="text"],
+input[type="email"],
 input[type="password"] {
   width: 100%;
   padding: 12px 8px;
@@ -109,11 +110,6 @@ footer-signup {
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
 }
-
-/* @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-} */
 
 @media all and (max-width: 420px) {
   form {
