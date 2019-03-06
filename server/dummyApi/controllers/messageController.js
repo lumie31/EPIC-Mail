@@ -116,6 +116,34 @@ class MessageController {
       ],
     });
   }
+
+  /**
+  * @method deleteMessage
+  * @description Delete a specific messages
+  * @static
+  * @param {object} req - The request object
+  * @param {object} res - The response object
+  * @returns {object} JSON response
+  * @memberof MessageController
+  */
+
+  static deleteMessage(request, response) {
+    const { id } = request.params;
+    const mail = Messages
+      .find(message => message.id === parseInt(id, 10));
+    if (!mail) {
+      return response.status(404).json({
+        status: 404,
+        error: 'Message with given id not found',
+      });
+    }
+    const index = Messages.indexOf(mail);
+    Messages.splice(index, 1);
+    return response.status(200).send({
+      status: response.statusCode,
+      message: 'Message with the given id has been deleted',
+    });
+  }
 }
 
 export default MessageController;
