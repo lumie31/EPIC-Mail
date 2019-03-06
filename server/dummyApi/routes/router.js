@@ -19,5 +19,6 @@ router.get('/messages', MessageController.allReceivedEmails);
 router.get('/messages/unread', MessageController.allUnreadEmails);
 router.get('/messages/sent', MessageController.allSentEmails);
 router.post('/messages', MessageController.sendEmail);
+router.delete('/messages/:id', MessageController.deleteMessage);
 
 export default router;
