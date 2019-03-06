@@ -1,7 +1,7 @@
 import Users from '../models/users';
 import validateUser from '../middlewares/validateUser';
 
-const userExist = validateUser.checkIfUserExists;
+// const userExist = validateUser.checkIfUserExists;
 class UserController {
   /**
    * Creates a user
