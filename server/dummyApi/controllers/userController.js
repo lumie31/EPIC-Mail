@@ -1,17 +1,17 @@
 import Users from '../models/users';
-import validateUser from '../middlewares/validateUser';
+// import validateUser from '../middlewares/validateUser';
 
 // const userExist = validateUser.checkIfUserExists;
 class UserController {
   /**
-   * Creates a user
-   * * @api {post} /api/user Create user
-   *
-   * @param {object} request - Request object
-   * @param {object} response - Response object
-   * @returns {json} created object
-   * @memberof userController
-   */
+  * @method createUser
+  * @description Create a new user account
+  * @static
+  * @param {object} req - The request object
+  * @param {object} res - The response object
+  * @returns {object} JSON response
+  * @memberof UserController
+  */
 
   static createUser(request, response) {
     const {
@@ -55,41 +55,36 @@ class UserController {
     };
 
     Users.push(data);
-    // if (userExist) {
-    //   return response.status(409).json({
-    //     status: 409,
-    //     error: 'User already exists',
-    //   });
-    // }
     return response.status(201).json({
       status: 201,
-      data: [{
+      data: {
         token: 'xyz123',
-        data,
-      }],
+      },
     });
   }
 
   /**
-   * signin a user
-   * * @api {post} /api/user signin user
-   *
-   * @param {object} request - Request object
-   * @param {object} response - Response object
-   * @returns {json} created object
-   * @memberof userController
-   */
+  * @method signin
+  * @description Sign in a user
+  * @static
+  * @param {object} req - The request object
+  * @param {object} res - The response object
+  * @returns {object} JSON response
+  * @memberof UserController
+  */
 
   static signin(request, response) {
     const { email, password } = request.body;
     if (!email) {
       return response.status(400).json({
-        message: 'Email is required',
+        status: 400,
+        error: 'Email is required',
       });
     }
     if (!password) {
       return response.status(400).json({
-        message: 'Password is required',
+        status: 400,
+        error: 'Password is required',
       });
     }
 
@@ -99,14 +94,12 @@ class UserController {
         status: 200,
         data: [{
           token: 'xyz123',
-          User,
-        },
-        ],
+        }],
       });
     }
     return response.status(404).json({
       status: 404,
-      message: 'User not found',
+      error: 'User not found',
     });
   }
 }
