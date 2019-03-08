@@ -2,14 +2,14 @@ import Messages from '../models/messages';
 
 class MessageController {
   /**
-   * @description Gets all received emails for a user
-   *
-   * @static allReceivedEmails
-   * @param {object} request Request object
-   * @param {object} response Response object
-   * @memberof messageController
-   * @returns {object} List of all received emails
-   */
+  * @method allReceivedEmails
+  * @description Get all received emails for a user
+  * @static
+  * @param {object} req - The request object
+  * @param {object} res - The response object
+  * @returns {object} JSON response
+  * @memberof MessageController
+  */
 
   static allReceivedEmails(request, response) {
     if (!Messages) {
@@ -24,14 +24,14 @@ class MessageController {
   }
 
   /**
-   * @description Gets all unread emails for a user
-   *
-   * @static allUnreadEmails
-   * @param {object} request Request object
-   * @param {object} response Response object
-   * @memberof messageController
-   * @returns {object} List of all unread emails
-   */
+  * @method allUnreadEmails
+  * @description Get all unread emails for a user
+  * @static
+  * @param {object} req - The request object
+  * @param {object} res - The response object
+  * @returns {object} JSON response
+  * @memberof MessageController
+  */
 
   static allUnreadEmails(request, response) {
     const messages = Messages.find(message => message.status === 'unread');
@@ -47,14 +47,14 @@ class MessageController {
   }
 
   /**
-   * @description Gets all sent emails by a user
-   *
-   * @static allSentEmails
-   * @param {object} request Request object
-   * @param {object} response Response object
-   * @memberof messageController
-   * @returns {object} List of all sent emails
-   */
+  * @method allSentEmails
+  * @description Get all emails sent by a user
+  * @static
+  * @param {object} req - The request object
+  * @param {object} res - The response object
+  * @returns {object} JSON response
+  * @memberof MessageController
+  */
 
   static allSentEmails(request, response) {
     const messages = Messages.find(message => message.status === 'sent');
@@ -70,14 +70,14 @@ class MessageController {
   }
 
   /**
-   * @description Send email to individuals
-   *
-   * @static sendEmail
-   * @param {object} request Request object
-   * @param {object} response Response object
-   * @memberof messageController
-   * @returns {object} created object
-   */
+  * @method sendEmail
+  * @description Send email to individuals
+  * @static
+  * @param {object} req - The request object
+  * @param {object} res - The response object
+  * @returns {object} JSON response
+  * @memberof MessageController
+  */
 
   static sendEmail(request, response) {
     const { subject, message } = request.body;
@@ -160,8 +160,8 @@ class MessageController {
     }
     const index = Messages.indexOf(mail);
     Messages.splice(index, 1);
-    return response.status(200).send({
-      status: response.statusCode,
+    return response.status(200).json({
+      status: 200,
       message: 'Message with the given id has been deleted',
     });
   }

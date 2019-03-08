@@ -35,6 +35,10 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
-    "express": "^4.16.4"
+    "coveralls": "^3.0.3",
+    "express": "^4.16.4",
+    "mocha-lcov-reporter": "^1.3.0",
+    "swagger-ui-express": "^4.0.2"
+
   }
 }
