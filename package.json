@@ -1,6 +1,9 @@
 {
   "name": "epicmail",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.8.0"
+  },
   "description": "A web application that helps people exchange messages/information over the internet",
   "main": "index.js",
   "scripts": {
@@ -19,11 +22,6 @@
   },
   "homepage": "https://github.com/lumie31/EPIC-Mail#readme",
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.4",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.3.4",
-    "@babel/register": "^7.0.0",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
     "eslint": "^5.15.0",
@@ -34,6 +32,11 @@
     "nyc": "^13.3.0"
   },
   "dependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/register": "^7.0.0",
     "body-parser": "^1.18.3",
     "coveralls": "^3.0.3",
     "express": "^4.16.4",
