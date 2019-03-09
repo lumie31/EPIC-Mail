@@ -131,6 +131,12 @@ class MessageController {
     const { id } = request.params;
 
     const mail = Messages.find(message => message.id === parseInt(id, 10));
+    if (!mail) {
+      return response.status(404).json({
+        status: 404,
+        error: 'Message with given id not found',
+      });
+    }
 
     return response.status(200).send({
       status: 200,

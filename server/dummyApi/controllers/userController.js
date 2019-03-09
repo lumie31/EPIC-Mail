@@ -57,9 +57,9 @@ class UserController {
     Users.push(data);
     return response.status(201).json({
       status: 201,
-      data: {
+      data: [{
         token: 'xyz123',
-      },
+      }],
     });
   }
 

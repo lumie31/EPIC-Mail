@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node ./server",
-    "test": "nyc --reporter=html --reporter=text mocha server/__test__/*.js --require @babel/register",
+    "test": "nyc --reporter=html --reporter=text mocha server/__test__/*.js --require @babel/register --exit --timeout=5000",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
