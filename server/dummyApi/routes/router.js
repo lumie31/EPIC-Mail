@@ -6,7 +6,9 @@ import validateUser from '../middlewares/validateUser';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.send('hello world');
+  res.status(200).json({
+    message: 'Welcome to EPIC Mail',
+  });
 });
 
 router.post(
