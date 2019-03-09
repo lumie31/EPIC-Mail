@@ -27,7 +27,6 @@
   "homepage": "https://github.com/lumie31/EPIC-Mail#readme",
   "devDependencies": {
     "@babel/node": "^7.2.2",
-    "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/register": "^7.0.0",
     "chai": "^4.2.0",
@@ -41,6 +40,7 @@
   },
   "dependencies": {
     "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
     "body-parser": "^1.18.3",
     "coveralls": "^3.0.3",
     "express": "^4.16.4",
