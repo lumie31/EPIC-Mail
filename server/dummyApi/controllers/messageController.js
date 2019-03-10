@@ -12,14 +12,21 @@ class MessageController {
   */
 
   static allReceivedEmails(request, response) {
-    if (!Messages) {
-      return response.status(404).json({
-        message: 'No messages here',
+    const receivedEmails = [];
+    Messages.forEach((message) => {
+      if (message.status === 'read' || message.status === 'unread') {
+        receivedEmails.push(message);
+      }
+    });
+    if (receivedEmails.length === 0) {
+      return response.status(422).json({
+        status: 422,
+        error: 'No received emails found',
       });
     }
     return response.status(200).json({
-      message: 'All Emails received successfully',
-      Messages,
+      status: 200,
+      data: receivedEmails,
     });
   }
 
@@ -34,15 +41,21 @@ class MessageController {
   */
 
   static allUnreadEmails(request, response) {
-    const messages = Messages.find(message => message.status === 'unread');
-    if (messages) {
-      return response.status(200).json({
-        message: 'Unread emails',
-        messages,
+    const unreadEmails = [];
+    Messages.forEach((message) => {
+      if (message.status === 'unread') {
+        unreadEmails.push(message);
+      }
+    });
+    if (unreadEmails.length === 0) {
+      return response.status(422).json({
+        status: 422,
+        error: 'No unread emails found',
       });
     }
-    return response.status(404).json({
-      message: 'Not found',
+    return response.status(200).json({
+      status: 200,
+      data: unreadEmails,
     });
   }
 
@@ -57,15 +70,21 @@ class MessageController {
   */
 
   static allSentEmails(request, response) {
-    const messages = Messages.find(message => message.status === 'sent');
-    if (messages) {
-      return response.status(200).json({
-        message: 'Sent emails',
-        messages,
+    const sentEmails = [];
+    Messages.forEach((message) => {
+      if (message.status === 'sent') {
+        sentEmails.push(message);
+      }
+    });
+    if (sentEmails.length === 0) {
+      return response.status(422).json({
+        status: 422,
+        error: 'No sent emails found',
       });
     }
-    return response.status(404).json({
-      message: 'Not found',
+    return response.status(200).json({
+      status: 200,
+      data: sentEmails,
     });
   }
 
@@ -82,22 +101,23 @@ class MessageController {
   static sendEmail(request, response) {
     const { subject, message } = request.body;
     if (!subject) {
-      return response.status(400).json({
-        message: 'Subject is required',
+      return response.status(406).json({
+        status: 406,
+        error: 'Subject is required',
       });
     }
     if (!message) {
-      return response.status(400).json({
-        message: 'Message is required',
+      return response.status(406).json({
+        status: 406,
+        error: 'Message is required',
       });
     }
-
     const data = {
       id: Messages.length + 1,
       subject,
       message,
       createdOn: new Date(),
-      parentMessageId: 1,
+      parentMessageId: Messages.length + 1,
       status: 'sent',
     };
 
@@ -137,7 +157,6 @@ class MessageController {
         error: 'Message with given id not found',
       });
     }
-
     return response.status(200).send({
       status: 200,
       data: mail,
@@ -146,7 +165,7 @@ class MessageController {
 
   /**
   * @method deleteMessage
-  * @description Delete a specific messages
+  * @description Delete an email in a user's inbox
   * @static
   * @param {object} req - The request object
   * @param {object} res - The response object

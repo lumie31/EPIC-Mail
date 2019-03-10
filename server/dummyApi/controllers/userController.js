@@ -19,34 +19,7 @@ class UserController {
       firstName,
       lastName,
       password,
-      confirmPassword,
     } = request.body;
-
-    if (!email) {
-      return response.status(400).json({
-        message: 'Email is required',
-      });
-    }
-    if (!firstName) {
-      return response.status(400).json({
-        message: 'First name is required',
-      });
-    }
-    if (!lastName) {
-      return response.status(400).json({
-        message: 'last name is required',
-      });
-    }
-    if (!password) {
-      return response.status(400).json({
-        message: 'password is required',
-      });
-    }
-    if (password !== confirmPassword) {
-      return response.status(400).json({
-        message: 'passwords do not match',
-      });
-    }
     const data = {
       email,
       firstName,
@@ -75,20 +48,8 @@ class UserController {
 
   static signin(request, response) {
     const { email, password } = request.body;
-    if (!email) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Email is required',
-      });
-    }
-    if (!password) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Password is required',
-      });
-    }
 
-    const User = Users.find(user => user.email === request.body.email);
+    const User = Users.find(user => user.email === email && user.password === password);
     if (User) {
       return response.status(200).json({
         status: 200,
@@ -97,9 +58,9 @@ class UserController {
         }],
       });
     }
-    return response.status(404).json({
-      status: 404,
-      error: 'User not found',
+    return response.status(400).json({
+      status: 400,
+      error: 'Email or Password is Incorrect',
     });
   }
 }

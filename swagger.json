@@ -13,7 +13,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "epic-email-server.herokuapp.com",
+  "host": "epic-mail-server.herokuapp.com",
   "basePath": "/api/v1",
   "tags": [
     {
@@ -454,6 +454,6 @@
   },
   "externalDocs": {
     "description": "Find out more about EPIC Mail",
-    "url": "http://epic-email-server.herokuapp.com"
+    "url": "http://epic-mail-server.herokuapp.com"
   }
 }
