@@ -6,7 +6,8 @@ const passwordRegex = /^[A-Za-z0-9]{6,}$/;
 
 export default class validateUsers {
   static checkIfUserExists(request, response, next) {
-    const userExist = Users.find(user => user.email === request.body);
+    const { email } = request.body;
+    const userExist = Users.find(user => user.email === email);
     if (userExist) {
       return response.status(409).json({
         status: 409,
@@ -18,7 +19,7 @@ export default class validateUsers {
 
   static validateSignup(request, response, next) {
     const {
-      email, firstName, lastName, password,
+      email, firstName, lastName, password, confirmPassword,
     } = request.body;
     if (!(firstName && firstName.trim().length)) {
       return response.status(422).json({
@@ -63,7 +64,12 @@ export default class validateUsers {
         error: 'Please enter your password',
       });
     }
-
+    if (password !== confirmPassword) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Passwords do not match',
+      });
+    }
     if (!passwordRegex.test(password)) {
       return response.status(422).json({
         status: 422,
@@ -80,15 +86,22 @@ export default class validateUsers {
     if (!(email && email.trim().length)) {
       return response.status(422).json({
         status: 422,
-        error: 'email is required',
+        error: 'Email is required',
+      });
+    }
+    if (!emailRegex.test(email)) {
+      return response.status(422).json({
+        status: 422,
+        error: 'Please enter a valid email',
       });
     }
     if (!(password && password.trim().length)) {
       return response.status(422).json({
         status: 422,
-        error: 'password is required',
+        error: 'Password is required',
       });
     }
+
     return next();
   }
 }
