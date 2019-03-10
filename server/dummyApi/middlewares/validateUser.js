@@ -5,18 +5,6 @@ const emailRegex = /\S+@\S+\.\S+/;
 const passwordRegex = /^[A-Za-z0-9]{6,}$/;
 
 export default class validateUsers {
-  static checkIfUserExists(request, response, next) {
-    const { email } = request.body;
-    const userExist = Users.find(user => user.email === email);
-    if (userExist) {
-      return response.status(409).json({
-        status: 409,
-        error: 'User already exists',
-      });
-    }
-    return next();
-  }
-
   static validateSignup(request, response, next) {
     const {
       email, firstName, lastName, password, confirmPassword,
@@ -74,6 +62,14 @@ export default class validateUsers {
       return response.status(422).json({
         status: 422,
         error: 'Password must be a minimum of 6 alphanumeric characters',
+      });
+    }
+
+    const userExist = Users.find(user => user.email === email);
+    if (userExist) {
+      return response.status(409).json({
+        status: 409,
+        error: 'User already exists',
       });
     }
 

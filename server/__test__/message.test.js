@@ -2,6 +2,8 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../index';
 
+const idValidator = /^(\d+\d+)$|^(\d+)$/;
+
 const {
   expect,
 } = chai;
@@ -64,6 +66,20 @@ describe('/GET Message route', () => {
         expect(response.body.data).to.have.property('subject');
         expect(response.body.data).to.have.property('message');
         expect(response.body.data).to.have.property('status');
+        done(error);
+      });
+  });
+
+  it('should throw an error if message id is invalid', (done) => {
+    const message = {
+      id: idValidator.test('xx'),
+    };
+    chai.request(app)
+      .get(`/api/v1/messages/${message.id}`)
+      .end((error, response) => {
+        expect(response).to.have.status(404);
+        expect(response.body).to.be.an('object');
+        expect(response.body).to.have.property('error').eql('Message with given id not found');
         done(error);
       });
   });

@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../index';
+import { users, loginDetails } from './testData';
 
 const {
   expect,
@@ -10,15 +11,9 @@ chai.use(chaiHttp);
 
 describe('/POST Signup route', () => {
   it('should not create a user with no firstname', (done) => {
-    const user = {
-      lastName: 'Doe',
-      email: 'johndoe@gmail.com',
-      password: '12345',
-      confirmPassword: '12345',
-    };
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send(user)
+      .send(users[0])
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
@@ -28,16 +23,9 @@ describe('/POST Signup route', () => {
   });
 
   it('should not create a user with invalid firstname', (done) => {
-    const user = {
-      firstName: 'D',
-      lastName: 'Doe',
-      email: 'johndoe@gmail.com',
-      password: '12345',
-      confirmPassword: '12345',
-    };
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send(user)
+      .send(users[1])
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
@@ -47,15 +35,9 @@ describe('/POST Signup route', () => {
   });
 
   it('should not create a user with no lastname', (done) => {
-    const user = {
-      firstName: 'John',
-      email: 'johndoe@gmail.com',
-      password: '12345',
-      confirmPassword: '12345',
-    };
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send(user)
+      .send(users[2])
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
@@ -65,16 +47,9 @@ describe('/POST Signup route', () => {
   });
 
   it('should not create a user with invalid lastname', (done) => {
-    const user = {
-      firstName: 'John',
-      lastName: 'D',
-      email: 'johndoe@gmail.com',
-      password: '12345',
-      confirmPassword: '12345',
-    };
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send(user)
+      .send(users[3])
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
@@ -84,15 +59,9 @@ describe('/POST Signup route', () => {
   });
 
   it('should not create a user with no email', (done) => {
-    const user = {
-      firstName: 'John',
-      lastName: 'Doe',
-      password: '12345',
-      confirmPassword: '12345',
-    };
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send(user)
+      .send(users[4])
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
@@ -102,16 +71,9 @@ describe('/POST Signup route', () => {
   });
 
   it('should not create a user with invalid email', (done) => {
-    const user = {
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'johndoe123',
-      password: '12345',
-      confirmPassword: '12345',
-    };
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send(user)
+      .send(users[5])
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
@@ -121,16 +83,9 @@ describe('/POST Signup route', () => {
   });
 
   it('should create user with valid input details', (done) => {
-    const user = {
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'johndoe1@gmail.com',
-      password: '123456a',
-      confirmPassword: '123456a',
-    };
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send(user)
+      .send(users[6])
       .end((error, response) => {
         expect(response).to.have.status(201);
         expect(response.body).to.be.an('object');
@@ -141,16 +96,9 @@ describe('/POST Signup route', () => {
   });
 
   it('should not create a user with invalid password', (done) => {
-    const user = {
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'johndoe1@gmail.com',
-      password: '123',
-      confirmPassword: '123',
-    };
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send(user)
+      .send(users[7])
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
@@ -160,14 +108,9 @@ describe('/POST Signup route', () => {
   });
 
   it('should not create a user with no password', (done) => {
-    const user = {
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'johndoe1@gmail.com',
-    };
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send(user)
+      .send(users[8])
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
@@ -177,16 +120,9 @@ describe('/POST Signup route', () => {
   });
 
   it('should throw an error if passwords do not match', (done) => {
-    const user = {
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'johndoe1@gmail.com',
-      password: '12345',
-      confirmPassword: '123',
-    };
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send(user)
+      .send(users[9])
       .end((error, response) => {
         expect(response).to.have.status(400);
         expect(response.body).to.be.an('object');
@@ -194,17 +130,25 @@ describe('/POST Signup route', () => {
         done(error);
       });
   });
+
+
+  it('should throw an error if user already exists', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signup')
+      .send(users[6])
+      .end((error, response) => {
+        expect(response).to.have.status(409);
+        expect(response.body).to.have.property('error').eql('User already exists');
+        done(error);
+      });
+  });
 });
 
 describe('/POST Login route', () => {
   it('should throw an error if email field is empty', (done) => {
-    const loginDetails = {
-      email: '',
-      password: '12345',
-    };
     chai.request(app)
       .post('/api/v1/auth/login')
-      .send(loginDetails)
+      .send(loginDetails[0])
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
@@ -214,13 +158,9 @@ describe('/POST Login route', () => {
   });
 
   it('should not login a user with invalid email', (done) => {
-    const loginDetails = {
-      email: 'mike',
-      password: '12345',
-    };
     chai.request(app)
       .post('/api/v1/auth/login')
-      .send(loginDetails)
+      .send(loginDetails[1])
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
@@ -230,13 +170,9 @@ describe('/POST Login route', () => {
   });
 
   it('should throw an error if password field is empty', (done) => {
-    const loginDetails = {
-      email: 'johndoe@gmail.com',
-      password: '',
-    };
     chai.request(app)
       .post('/api/v1/auth/login')
-      .send(loginDetails)
+      .send(loginDetails[2])
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
@@ -246,13 +182,9 @@ describe('/POST Login route', () => {
   });
 
   it('should login a user with valid email', (done) => {
-    const loginDetails = {
-      email: 'maryjane@gmail.com',
-      password: '12345',
-    };
     chai.request(app)
       .post('/api/v1/auth/login')
-      .send(loginDetails)
+      .send(loginDetails[3])
       .end((error, response) => {
         expect(response).to.have.status(200);
         expect(response.body).to.be.an('object');
@@ -263,13 +195,9 @@ describe('/POST Login route', () => {
   });
 
   it('should throw an error if user does not exist', (done) => {
-    const loginDetails = {
-      email: 'xyz@mail.com',
-      password: '12345',
-    };
     chai.request(app)
       .post('/api/v1/auth/login')
-      .send(loginDetails)
+      .send(loginDetails[4])
       .end((error, response) => {
         expect(response).to.have.status(400);
         expect(response.body).to.be.an('object');

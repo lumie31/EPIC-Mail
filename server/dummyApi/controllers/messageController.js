@@ -18,12 +18,12 @@ class MessageController {
         receivedEmails.push(message);
       }
     });
-    if (receivedEmails.length === 0) {
-      return response.status(422).json({
-        status: 422,
-        error: 'No received emails found',
-      });
-    }
+    // if (receivedEmails.length === 0) {
+    //   return response.status(422).json({
+    //     status: 422,
+    //     error: 'No received emails found',
+    //   });
+    // }
     return response.status(200).json({
       status: 200,
       data: receivedEmails,
@@ -47,12 +47,12 @@ class MessageController {
         unreadEmails.push(message);
       }
     });
-    if (unreadEmails.length === 0) {
-      return response.status(422).json({
-        status: 422,
-        error: 'No unread emails found',
-      });
-    }
+    // if (unreadEmails.length === 0) {
+    //   return response.status(422).json({
+    //     status: 422,
+    //     error: 'No unread emails found',
+    //   });
+    // }
     return response.status(200).json({
       status: 200,
       data: unreadEmails,
@@ -76,12 +76,12 @@ class MessageController {
         sentEmails.push(message);
       }
     });
-    if (sentEmails.length === 0) {
-      return response.status(422).json({
-        status: 422,
-        error: 'No sent emails found',
-      });
-    }
+    // if (sentEmails.length === 0) {
+    //   return response.status(422).json({
+    //     status: 422,
+    //     error: 'No sent emails found',
+    //   });
+    // }
     return response.status(200).json({
       status: 200,
       data: sentEmails,
