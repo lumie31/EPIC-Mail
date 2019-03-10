@@ -15,6 +15,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1', router);
 
+app.use((request, response, next) => {
+  response.status(404).json({
+    status: 404,
+    error: 'Endpoint not found',
+  });
+  next();
+});
+
 app.listen(port, () => {
   console.log(`server started on port ${port}`);
 });
