@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>EPIC Mail | Compose</title>
-    <!-- <link rel="stylesheet" href="./css/style.css" /> -->
-    <!-- <link rel="stylesheet" href="./css/login.css" /> -->
+    <link rel="stylesheet" href="./css/inbox.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/compose.css" />
     <link rel="stylesheet" href="./css/dashboard.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Fondamento|Roboto|Josefin+Sans"
@@ -22,81 +23,68 @@
     <script>
       tinymce.init({ selector: "textarea" });
     </script>
-    <style>
-      form {
-        margin-top: 20vh;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        margin: 5vh auto;
-        width: 60%;
-        padding: 20px;
-        margin-bottom: 100px;
-        box-shadow: 1px 8px 24px 4px rgba(86, 91, 115, 0.15);
-      }
-
-      .compose-form-content {
-        padding: 12px 8px;
-        margin: 10px 0;
-        /* font-size: 14px; */
-      }
-
-      .compose-form-content input {
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 14px;
-        width: 100%;
-        padding: 8px 8px;
-        margin: 5px 0;
-      }
-
-      button[type="submit"] {
-        text-align: center;
-        background-color: #4caf50;
-        color: white;
-        padding: 10px 15px;
-        margin: 8px 0;
-        font-size: 14px;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-      }
-      button:hover {
-        opacity: 0.8;
-      }
-    </style>
   </head>
   <body>
     <header class="navbar">
       <span class="navbar-toggle" id="js-navbar-toggle">
         <i class="fas fa-bars"></i>
+        <i id="times" class="fas fa-times"></i>
       </span>
       <a href="index.html" class="logo">EPIC Mail</a>
+      <ul class="main-nav" id="js-menu">
+        <li id="hide">
+          <a href="compose-message.html" class="nav-links">Compose</a>
+        </li>
+        <li id="hide">
+          <a href="inbox.html" class="nav-links">Inbox</a>
+        </li>
+        <li id="hide">
+          <a href="draft.html" class="nav-links">Drafts</a>
+        </li>
+        <li id="hide">
+          <a href="groups.html" class="nav-links">Create Groups</a>
+        </li>
+        <li id="hide">
+          <a href="sent.html" class="nav-links">Sent Items</a>
+        </li>
+        <li id="hide">
+          <a href="deleted.html" class="nav-links">Deleted</a>
+        </li>
+        <li id="hide">
+            <a href="index.html" class="nav-links">Logout</a>
+          </li>
+      </ul>
       <input class="search" type="text" placeholder="Search..." />
     </header>
     <div class="flexbox-container">
-      <nav class="sidebar">
-        <div class="options">
-          <div class="icon">
-            <i class="fas fa-user-circle fa-3x"></i>
+        <nav class="sidebar">
+            <div class="icon">
+                <i class="fas fa-user-circle fa-3x"></i>
+              </div>
+          <div class="options">
+            
+            <div>
+              <i class="far fa-plus-square"></i>
+              <a href="./compose-message.html">Compose message</a>
+            </div>
+            <div><i class="fas fa-inbox"></i> <a href="./inbox.html">Inbox</a></div>
+            <div><i class="fas fa-archive"></i> <a href="./draft.html">Drafts</a></div>
+            <div>
+              <i class="fas fa-users"></i> <a href="./groups.html">Create Groups</a>
+            </div>
+            <div>
+              <i class="fas fa-share-square"></i> <a href="./sent.html">Sent Items</a>
+            </div>
+            <div>
+              <i class="far fa-trash-alt"></i>
+              <a href="./deleted.html">Deleted Items</a>
+            </div>
+            <div>
+                <i class="fas fa-sign-out-alt"></i>
+                <a href="./index.html">Logout</a>
+              </div>
           </div>
-          <div>
-            <i class="far fa-plus-square"></i>
-            <a href="#compose">Compose message</a>
-          </div>
-          <div><i class="fas fa-inbox"></i> <a href="#Inbox">Inbox</a></div>
-          <div><i class="fas fa-archive"></i> <a href="#Drafts">Drafts</a></div>
-          <div>
-            <i class="fas fa-users"></i> <a href="#Create">Create Groups</a>
-          </div>
-          <div>
-            <i class="fas fa-share-square"></i> <a href="#Sent">Sent Items</a>
-          </div>
-          <div>
-            <i class="far fa-trash-alt"></i>
-            <a href="#Deleted">Deleted Items</a>
-          </div>
-        </div>
-      </nav>
+        </nav>
       <article class="main">
         <form onsubmit="compose(event)">
           <div class="compose-form-content">
