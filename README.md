@@ -6,7 +6,7 @@
 A web application that helps people exchange messages/information over the internet
 
 ## Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+To get this unto your local machine, all you need to do is clone this repository.
 
 ### Prerequisites
 To successfully install and run this software on your local machine, you'll need the following:
