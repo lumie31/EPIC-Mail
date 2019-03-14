@@ -287,17 +287,17 @@
         "email": {
           "type": "string"
         },
-        "firstname": {
+        "firstName": {
           "type": "string"
         },
-        "lastname": {
+        "lastName": {
           "type": "string"
         },
         "password": {
           "type": "string",
           "format": "password"
         },
-        "confirmpassword": {
+        "confirmPassword": {
           "type": "string",
           "format": "password"
         }
