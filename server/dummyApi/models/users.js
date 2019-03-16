@@ -4,7 +4,7 @@ const Users = [
     email: 'johndoe@gmail.com',
     firstName: 'John',
     lastName: 'Doe',
-    password: '12345',
+    password: '123456',
   },
 
   {
@@ -12,7 +12,7 @@ const Users = [
     email: 'maryjane@gmail.com',
     firstName: 'Mary',
     lastName: 'Jane',
-    password: '12345',
+    password: '123456',
   },
 
   {
@@ -20,7 +20,7 @@ const Users = [
     email: 'meyou@gmail.com',
     firstName: 'Me',
     lastName: 'You',
-    password: '12345',
+    password: '123456',
   },
 ];
 

@@ -1,70 +1,30 @@
-import Users from '../models/users';
+import Validator from 'validatorjs';
 
-const validNameRegex = /^[A-Za-z]{3,30}$/;
-const emailRegex = /\S+@\S+\.\S+/;
-const passwordRegex = /^[A-Za-z0-9]{6,}$/;
+import Users from '../models/users';
 
 export default class validateUsers {
   static validateSignup(request, response, next) {
-    const {
+    let {
+      // eslint-disable-next-line prefer-const
       email, firstName, lastName, password, confirmPassword,
     } = request.body;
-    if (!(firstName && firstName.trim().length)) {
-      return response.status(422).json({
-        status: 422,
-        error: 'Please enter your firstname',
-      });
-    }
-    if (!validNameRegex.test(firstName)) {
-      return response.status(422).json({
-        status: 422,
-        error: 'First name must be between 3 and 30 characters',
-      });
-    }
-    if (!(lastName && lastName.trim().length)) {
-      return response.status(422).json({
-        status: 422,
-        error: 'Please enter your lastname',
-      });
-    }
-    if (!validNameRegex.test(lastName)) {
-      return response.status(422).json({
-        status: 422,
-        error: 'Last name must be between 3 and 30 characters',
-      });
-    }
-    if (!(email && email.trim().length)) {
-      return response.status(422).json({
-        status: 422,
-        error: 'Please enter your email',
-      });
-    }
 
-    if (!emailRegex.test(email)) {
-      return response.status(422).json({
-        status: 422,
-        error: 'Please enter a valid email',
-      });
-    }
-    if (!(password && password.trim().length)) {
-      return response.status(422).json({
-        status: 422,
-        error: 'Please enter your password',
-      });
-    }
-    if (password !== confirmPassword) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Passwords do not match',
-      });
-    }
-    if (!passwordRegex.test(password)) {
-      return response.status(422).json({
-        status: 422,
-        error: 'Password must be a minimum of 6 alphanumeric characters',
-      });
-    }
+    const rules = {
+      firstName: 'required|alpha|min:3|max:30|string',
+      lastName: 'required|alpha|min:3|max:30|string',
+      email: 'required|email',
+      password: 'required|alpha_num|min:6',
+      confirmPassword: 'required|same:password',
+    };
 
+    const validation = new Validator(request.body, rules);
+
+    if (validation.fails()) {
+      return response.status(422).json({
+        status: 422,
+        error: validation.errors.errors,
+      });
+    }
     const userExist = Users.find(user => user.email === email);
     if (userExist) {
       return response.status(409).json({
@@ -72,31 +32,32 @@ export default class validateUsers {
         error: 'User already exists',
       });
     }
-
+    request.body.email = email;
+    request.body.firstName = firstName;
+    request.body.lastName = lastName;
+    request.body.password = password;
+    request.body.confirmPassword = confirmPassword;
     return next();
   }
 
   static validateLogin(request, response, next) {
     const { email, password } = request.body;
 
-    if (!(email && email.trim().length)) {
+    const rules = {
+      email: 'required|email',
+      password: 'required|alpha_num|min:6',
+    };
+
+    const validation = new Validator(request.body, rules);
+
+    if (validation.fails()) {
       return response.status(422).json({
         status: 422,
-        error: 'Email is required',
+        error: validation.errors.errors,
       });
     }
-    if (!emailRegex.test(email)) {
-      return response.status(422).json({
-        status: 422,
-        error: 'Please enter a valid email',
-      });
-    }
-    if (!(password && password.trim().length)) {
-      return response.status(422).json({
-        status: 422,
-        error: 'Password is required',
-      });
-    }
+    request.body.email = email;
+    request.body.password = password;
 
     return next();
   }
