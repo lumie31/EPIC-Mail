@@ -17,7 +17,8 @@ describe('/POST Signup route', () => {
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('error').eql('Please enter your firstname');
+        expect(response.body).to.have.property('error');
+        expect(response.body.error).to.have.property('firstName').to.be.an('array').to.include('The firstName field is required.');
         done(error);
       });
   });
@@ -29,7 +30,8 @@ describe('/POST Signup route', () => {
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('error').eql('First name must be between 3 and 30 characters');
+        expect(response.body).to.have.property('error');
+        expect(response.body.error).to.have.property('firstName').to.be.an('array').to.include('The firstName must be at least 3 characters.');
         done(error);
       });
   });
@@ -41,7 +43,8 @@ describe('/POST Signup route', () => {
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('error').eql('Please enter your lastname');
+        expect(response.body).to.have.property('error');
+        expect(response.body.error).to.have.property('lastName').to.be.an('array').to.include('The lastName field is required.');
         done(error);
       });
   });
@@ -53,7 +56,8 @@ describe('/POST Signup route', () => {
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('error').eql('Last name must be between 3 and 30 characters');
+        expect(response.body).to.have.property('error');
+        expect(response.body.error).to.have.property('lastName').to.be.an('array').to.include('The lastName must be at least 3 characters.');
         done(error);
       });
   });
@@ -65,7 +69,8 @@ describe('/POST Signup route', () => {
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('error').eql('Please enter your email');
+        expect(response.body).to.have.property('error');
+        expect(response.body.error).to.have.property('email').to.be.an('array').to.include('The email field is required.');
         done(error);
       });
   });
@@ -77,7 +82,8 @@ describe('/POST Signup route', () => {
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('error').eql('Please enter a valid email');
+        expect(response.body).to.have.property('error');
+        expect(response.body.error).to.have.property('email').to.be.an('array').to.include('The email format is invalid.');
         done(error);
       });
   });
@@ -102,7 +108,8 @@ describe('/POST Signup route', () => {
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('error').eql('Password must be a minimum of 6 alphanumeric characters');
+        expect(response.body).to.have.property('error');
+        expect(response.body.error).to.have.property('password').to.be.an('array').to.include('The password must be at least 6 characters.');
         done(error);
       });
   });
@@ -114,7 +121,8 @@ describe('/POST Signup route', () => {
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('error').eql('Please enter your password');
+        expect(response.body).to.have.property('error');
+        expect(response.body.error).to.have.property('password').to.be.an('array').to.include('The password field is required.');
         done(error);
       });
   });
@@ -124,9 +132,11 @@ describe('/POST Signup route', () => {
       .post('/api/v1/auth/signup')
       .send(users[9])
       .end((error, response) => {
-        expect(response).to.have.status(400);
+        expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('error').eql('Passwords do not match');
+        expect(response.body).to.have.property('error');
+        expect(response.body.error).to.have.property('confirmPassword').to.be.an('array').to.include('The confirmPassword and password fields must match.');
+
         done(error);
       });
   });
@@ -152,7 +162,8 @@ describe('/POST Login route', () => {
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('error').eql('Email is required');
+        expect(response.body).to.have.property('error');
+        expect(response.body.error).to.have.property('email').to.be.an('array').to.include('The email field is required.');
         done(error);
       });
   });
@@ -164,7 +175,8 @@ describe('/POST Login route', () => {
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('error').eql('Please enter a valid email');
+        expect(response.body).to.have.property('error');
+        expect(response.body.error).to.have.property('email').to.be.an('array').to.include('The email format is invalid.');
         done(error);
       });
   });
@@ -176,7 +188,8 @@ describe('/POST Login route', () => {
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('error').eql('Password is required');
+        expect(response.body).to.have.property('error');
+        expect(response.body.error).to.have.property('password').to.be.an('array').to.include('The password field is required.');
         done(error);
       });
   });

@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Handle requests on other endpoints', () => {
-  it('should throw an error is endpoint is invalid', (done) => {
+  it('should throw an error if endpoint is invalid', (done) => {
     chai.request(app)
       .get('/api/v1/xyz/abc')
       .end((error, response) => {
@@ -17,9 +17,9 @@ describe('Handle requests on other endpoints', () => {
       });
   });
 
-  it('should return a welcome message on the /api/v1 route', (done) => {
+  it('should return a welcome message on the home route', (done) => {
     chai.request(app)
-      .get('/api/v1')
+      .get('/')
       .end((error, response) => {
         expect(response).to.have.status(200);
         expect(response.body).to.have.property('message').eql('Welcome to EPIC Mail');
