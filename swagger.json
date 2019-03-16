@@ -1,0 +1,459 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "A web application that helps people exchange messages/information over the internet",
+    "version": "1.0.0",
+    "title": "EPIC Mail",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "olumideokedusi@outlook.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "epic-mail-server.herokuapp.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "User",
+      "description": "Create an account and login"
+    },
+    {
+      "name": "Message",
+      "description": "Exchange messages/information over the internet"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Create a new user",
+        "description": "This endpoint registers a new user",
+        "operationId": "createUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "data needed to create a user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Signup"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AuthResponse"
+            }
+          },
+          "400": {
+            "description": "Email is required"
+          },
+          "409": {
+            "description": "User already exists"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "login a user",
+        "description": "This endpoint signs in a user",
+        "operationId": "loginUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "user credentials required for login",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AuthResponse"
+            }
+          },
+          "400": {
+            "description": "Password is required"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/messages": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "Send emails to individuals",
+        "description": "This endpoint creates/sends emails to group or individuals",
+        "operationId": "postMessage",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "data needed to create a message",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostMessage"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Message is required",
+            "schema": {
+              "$ref": "#/definitions/PostResponse"
+            }
+          },
+          "400": {
+            "description": "message field cannot be empty"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "Get all received emails for a user",
+        "description": "This endpoint retrieves all received emails",
+        "operationId": "getMessages",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GetResponse"
+            }
+          }
+        }
+      }
+    },
+    "/messages/unread": {
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "Get all unread emails for a user",
+        "description": "This endpoint retrieves all unread messages",
+        "operationId": "getUnreadMessages",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GetResponse"
+            }
+          }
+        }
+      }
+    },
+    "/messages/sent": {
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "Get all emails sent by a user",
+        "description": "This endpoint retrieves all sent emails",
+        "operationId": "getsentMessages",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GetResponse"
+            }
+          }
+        }
+      }
+    },
+    "/messages/{messageId}": {
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "Get a specific user's email",
+        "description": "This endpoint retrieves a message with the given id",
+        "operationId": "getMessage",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "ID of the message to retrieve",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GetResponse"
+            }
+          },
+          "404": {
+            "description": "Message with the given id not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "Delete an email in a user's inbox",
+        "description": "This endpoint deletes a message with the given id",
+        "operationId": "deleteMessage",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message with the given id has been deleted",
+            "schema": {
+              "$ref": "#/definitions/DeleteResponse"
+            }
+          },
+          "400": {
+            "description": "The given id is invalid"
+          },
+          "404": {
+            "description": "Message with the given id not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Signup": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string",
+          "format": "password"
+        },
+        "confirmPassword": {
+          "type": "string",
+          "format": "password"
+        }
+      }
+    },
+    "Login": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string",
+          "format": "password"
+        }
+      }
+    },
+    "AuthResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "object",
+          "items": {
+            "properties": {
+              "token": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "PostMessage": {
+      "type": "object",
+      "properties": {
+        "subject": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "PostResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "object",
+          "items": {
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "createdon": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "subject": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "parentMessageId": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "status": {
+                "type": "string",
+                "description": "Message status",
+                "enum": [
+                  "read",
+                  "unread",
+                  "sent"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "createdon": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "subject": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "senderId": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "receiverId": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "parentMessageId": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "status": {
+                "type": "string",
+                "description": "Message status",
+                "enum": [
+                  "read",
+                  "unread",
+                  "sent"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "DeleteResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "messaage": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about EPIC Mail",
+    "url": "http://epic-mail-server.herokuapp.com"
+  }
+}
