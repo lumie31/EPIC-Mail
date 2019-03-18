@@ -1,8 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
+import dotenv from 'dotenv';
 import swaggerDocument from '../swagger.json';
 import routes from './dummyApi/routes';
+import apiRoutes from './api/routes';
+
+dotenv.config();
+
+require('dotenv').config();
 
 const app = express();
 
@@ -21,6 +27,7 @@ app.get('/', (request, response) => {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1', routes.userRouter);
 app.use('/api/v1', routes.messageRouter);
+app.use('/api/v2', apiRoutes);
 
 
 app.use((request, response, next) => {
