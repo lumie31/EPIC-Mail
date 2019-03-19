@@ -17,20 +17,20 @@ class MessageController {
   static sendEmail(request, response) {
     const { receiver, subject, message } = request.body;
     if (!receiver) {
-      return response.status(406).json({
-        status: 406,
+      return response.status(400).json({
+        status: 400,
         error: 'Receiver is required',
       });
     }
     if (!subject) {
-      return response.status(406).json({
-        status: 406,
+      return response.status(400).json({
+        status: 400,
         error: 'Subject is required',
       });
     }
     if (!message) {
-      return response.status(406).json({
-        status: 406,
+      return response.status(400).json({
+        status: 400,
         error: 'Message is required',
       });
     }
@@ -57,8 +57,8 @@ class MessageController {
       client.query(query, values, (error, result) => {
         done();
         if (error) {
-          return response.status(400).json({
-            status: 400,
+          return response.status(500).json({
+            status: 500,
             error: 'Error in sending message',
           });
         }
@@ -87,14 +87,14 @@ class MessageController {
       client.query(query, (error, result) => {
         done();
         if (error) {
-          return response.status(400).json({
-            status: 400,
+          return response.status(500).json({
+            status: 500,
             error: 'Error getting received mails',
           });
         }
         return response.status(200).json({
           status: 200,
-          data: result.rows[0],
+          data: [result.rows],
         });
       });
     });
@@ -114,9 +114,64 @@ class MessageController {
       client.query(query, (error, result) => {
         done();
         if (error) {
-          return response.status(400).json({
-            status: 400,
+          return response.status(500).json({
+            status: 500,
             error: 'Error getting unread mails',
+          });
+        }
+        return response.status(200).json({
+          status: 200,
+          data: [result.rows],
+        });
+      });
+    });
+  }
+
+  /**
+   * Get all emails sent by a user
+   * @param {object} request express request object
+   * @param {object} response express response object
+   *
+   * @returns {json} json
+   * @memberof messageController
+   */
+  static allSentEmails(request, response) {
+    pool.connect((err, client, done) => {
+      const query = `SELECT * FROM Messages where senderemail='${request.decoded.email}'`;
+      client.query(query, (error, result) => {
+        done();
+        if (error) {
+          return response.status(500).json({
+            status: 500,
+            error: 'Error getting sent mails',
+          });
+        }
+        return response.status(200).json({
+          status: 200,
+          data: [result.rows],
+        });
+      });
+    });
+  }
+
+  /**
+   * Get a specific user's email
+   * @param {object} request express request object
+   * @param {object} response express response object
+   *
+   * @returns {json} json
+   * @memberof messageController
+   */
+  static getSpecificEmail(request, response) {
+    const { messageId } = request.params;
+    pool.connect((err, client, done) => {
+      const query = `SELECT * FROM Messages where id='${messageId}'`;
+      client.query(query, (error, result) => {
+        done();
+        if (error) {
+          return response.status(500).json({
+            status: 500,
+            error: 'Error getting a specific email',
           });
         }
         return response.status(200).json({
