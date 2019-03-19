@@ -25,7 +25,7 @@ class UserController {
       firstname: request.body.firstName,
       lastname: request.body.lastName,
       password: bcrypt.hashSync(request.body.password, salt),
-      created_at: moment().format(),
+      createdOn: moment().format(),
     };
 
     pool.connect((err, client, done) => {
@@ -34,7 +34,7 @@ class UserController {
         firstname,
         lastname,
         password,
-        created_at
+        createdOn
       ) VALUES($1, $2, $3, $4, $5) RETURNING *`;
       const values = Object.values(data);
 
@@ -50,7 +50,6 @@ class UserController {
           return response.status(400).json({
             status: 400,
             error,
-
           });
         }
         const user = result.rows[0];
@@ -59,7 +58,7 @@ class UserController {
           email: user.email,
         }, secret);
         // eslint-disable-next-line camelcase
-        const { password, created_at, ...userdata } = user;
+        const { password, createdOn, ...userdata } = user;
 
         return response.status(201).json({
           status: 201,
@@ -106,7 +105,7 @@ class UserController {
           }, secret);
           const {
             // eslint-disable-next-line camelcase
-            password, created_at, updated_at, ...userdata
+            password, createdOn, updatedOn, ...userdata
           } = user;
           return response.status(200).json({
             status: 200,
