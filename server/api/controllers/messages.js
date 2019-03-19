@@ -99,6 +99,33 @@ class MessageController {
       });
     });
   }
+
+  /**
+   * Get all unread emails for a user
+   * @param {object} request express request object
+   * @param {object} response express response object
+   *
+   * @returns {json} json
+   * @memberof messageController
+   */
+  static allUnreadEmails(request, response) {
+    pool.connect((err, client, done) => {
+      const query = `SELECT * FROM Messages where receiveremail='${request.decoded.email}' and status='unread'`;
+      client.query(query, (error, result) => {
+        done();
+        if (error) {
+          return response.status(400).json({
+            status: 400,
+            error: 'Error getting unread mails',
+          });
+        }
+        return response.status(200).json({
+          status: 200,
+          data: result.rows[0],
+        });
+      });
+    });
+  }
 }
 
 export default MessageController;
