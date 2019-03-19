@@ -94,7 +94,7 @@ class MessageController {
         }
         return response.status(200).json({
           status: 200,
-          data: result.rows[0],
+          data: [result.rows],
         });
       });
     });
@@ -121,7 +121,34 @@ class MessageController {
         }
         return response.status(200).json({
           status: 200,
-          data: result.rows[0],
+          data: [result.rows],
+        });
+      });
+    });
+  }
+
+  /**
+   * Get all emails sent by a user
+   * @param {object} request express request object
+   * @param {object} response express response object
+   *
+   * @returns {json} json
+   * @memberof messageController
+   */
+  static allSentEmails(request, response) {
+    pool.connect((err, client, done) => {
+      const query = `SELECT * FROM Messages where senderemail='${request.decoded.email}'`;
+      client.query(query, (error, result) => {
+        done();
+        if (error) {
+          return response.status(400).json({
+            status: 400,
+            error: 'Error getting sent mails',
+          });
+        }
+        return response.status(200).json({
+          status: 200,
+          data: [result.rows],
         });
       });
     });
