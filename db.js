@@ -1,10 +1,27 @@
-import pool from './database';
+/* eslint-disable no-unused-vars */
+const { Pool } = require('pg');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+// eslint-disable-next-line no-console
+console.log('database', process.env.DATABASE_URL);
+
+pool.on('connect', () => {
+  // eslint-disable-next-line no-console
+  console.log('connected to the db');
+});
 
 const createTables = () => {
   const sql = `
   DROP TABLE IF EXISTS Inbox;
   DROP TABLE IF EXISTS Sent;
   DROP TABLE IF EXISTS Contacts;
+  DROP TABLE IF EXISTS Groups;
+  DROP TABLE IF EXISTS Group_Members;
   DROP TABLE IF EXISTS Users CASCADE;
   DROP TABLE IF EXISTS Messages CASCADE;
 
@@ -54,15 +71,15 @@ CREATE TABLE Sent(
     id SERIAL PRIMARY KEY,
     name VARCHAR(128) NOT NULL
     );
-    CREATE TABLE GroupMembers(
+    CREATE TABLE Group_Members(
   groupId SERIAL PRIMARY KEY,
   memberId SERIAL
   );
   `;
   pool.query(sql)
-    .then(() => {
+    .then((res) => {
       // eslint-disable-next-line no-console
-      console.log('tables created');
+      console.log('tables created', res);
       pool.end();
     })
     .catch((err) => {
@@ -70,21 +87,7 @@ CREATE TABLE Sent(
       console.log('error', err);
       pool.end();
     });
-  };
   return createTables();
+};
 
-// const dropDatabase = () => {
-//   pool.query('DROP TABLE IF EXISTS Users, Messages, Contacts, Sent, Inbox, Groups, GroupMembers')
-//     .then((res) => {
-//       console.log('Database dropped', res);
-//     });
-// };
-
-
-// module.exports = {
-//   dropDatabase,
-//   createTables,
-// };
-
-// eslint-disable-next-line import/no-extraneous-dependencies
-// require('make-runnable');
+export default pool;

@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../index';
+import app from '../../index';
 import { users, loginDetails } from './testData';
 
 const {

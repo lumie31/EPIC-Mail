@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import moment from 'moment';
 
-import pool from '../models/database';
+import pool from '../../../db';
 
 require('dotenv').config();
 

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import pool from '../models/database';
+import db from './index';
 
 /**
  * @class messageController
@@ -13,64 +13,40 @@ class MessageController {
    * @returns {json} json
    * @memberof messageController
    */
-  // eslint-disable-next-line consistent-return
-  static sendEmail(request, response) {
-    const { receiver, subject, message } = request.body;
-    if (!receiver) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Receiver is required',
-      });
-    }
-    if (!subject) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Subject is required',
-      });
-    }
-    if (!message) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Message is required',
-      });
-    }
-    const data = {
-      subject: request.body.subject,
-      message: request.body.message,
-      createdOn: moment().format(),
-      senderEmail: request.decoded.email,
-      receiverEmail: request.body.receiver,
-      status: 'sent',
-    };
+  static async sendEmail(req, res) {
+    const { email } = req.body;
+    const getReceiverId = 'select * from Users where email=$1';
+    const text = `INSERT INTO
+      Messages(subject, message, senderId, createdOn, receiverId, status)
+      VALUES($1, $2, $3, $4, $5, $6)
+      returning *`;
+    const sentQuery = 'INSERT into Sent(senderId, messageId, createdOn) values($1, $2, $3) returning *';
+    const inboxQuery = 'INSERT into Inbox(receiverId, messageId, createdOn) values($1, $2, $3) returning *';
 
-    pool.connect((err, client, done) => {
-      const query = `INSERT INTO Messages(
-        subject,
-        message,
-        createdOn,
-        senderEmail,
-        receiverEmail,
-        status
-        ) VALUES($1, $2, $3, $4, $5, $6) RETURNING *`;
-      const values = Object.values(data);
-
-      client.query(query, values, (error, result) => {
-        done();
-        if (error) {
-          return response.status(500).json({
-            status: 500,
-            error: 'Error in sending message',
-          });
-        }
-        return response.status(201).json({
-          status: 201,
-          data: {
-            message: 'Message sent successfully',
-            id: result.rows[0].id,
-          },
-        });
+    try {
+      await db.query('BEGIN');
+      const receiver = await db.query(getReceiverId, [email]);
+      const { rows } = await db.query(text, [
+        req.body.subject,
+        req.body.message,
+        req.decoded.id,
+        moment().format(),
+        receiver.rows[0].id,
+        'sent',
+      ]);
+      await db.query(sentQuery, [rows[0].senderid, rows[0].id, rows[0].createdon]);
+      await db.query(inboxQuery, [rows[0].receiverid, rows[0].id, rows[0].createdon]);
+      await db.query('COMMIT');
+      return res.status(201).json({
+        status: 201,
+        data: rows[0],
       });
-    });
+    } catch (error) {
+      await db.query('ROLLBACK');
+      return res.status(400).send(error);
+    } finally {
+      db.release();
+    }
   }
 
   /**
@@ -81,23 +57,20 @@ class MessageController {
    * @returns {json} json
    * @memberof messageController
    */
-  static allReceivedEmails(request, response) {
-    pool.connect((err, client, done) => {
-      const query = `SELECT * FROM Messages where receiveremail='${request.decoded.email}' and status='read'`;
-      client.query(query, (error, result) => {
-        done();
-        if (error) {
-          return response.status(500).json({
-            status: 500,
-            error: 'Error getting received mails',
-          });
-        }
-        return response.status(200).json({
-          status: 200,
-          data: [result.rows],
-        });
+  static async allReceivedEmails(req, res) {
+    const { id } = req.decoded;
+    const text = `select * from Inbox INNER JOIN Messages ON Inbox.messageid = messages.id WHERE Inbox.receiverid = '${id}'`;
+
+    try {
+      const { rows } = await db.query(text);
+
+      return res.status(201).json({
+        status: 201,
+        data: rows,
       });
-    });
+    } catch (error) {
+      return res.status(400).send(error);
+    }
   }
 
   /**
@@ -108,23 +81,20 @@ class MessageController {
    * @returns {json} json
    * @memberof messageController
    */
-  static allUnreadEmails(request, response) {
-    pool.connect((err, client, done) => {
-      const query = `SELECT * FROM Messages where receiveremail='${request.decoded.email}' and status='unread'`;
-      client.query(query, (error, result) => {
-        done();
-        if (error) {
-          return response.status(500).json({
-            status: 500,
-            error: 'Error getting unread mails',
-          });
-        }
-        return response.status(200).json({
-          status: 200,
-          data: [result.rows],
-        });
+  static async allUnreadEmails(req, res) {
+    const { id } = req.decoded;
+    const text = `select * from Inbox INNER JOIN Messages ON Inbox.messageid = messages.id WHERE Inbox.receiverid = '${id}' and status='sent' `;
+
+    try {
+      const { rows } = await db.query(text);
+
+      return res.status(201).json({
+        status: 201,
+        data: rows,
       });
-    });
+    } catch (error) {
+      return res.status(400).send(error);
+    }
   }
 
   /**
@@ -135,23 +105,20 @@ class MessageController {
    * @returns {json} json
    * @memberof messageController
    */
-  static allSentEmails(request, response) {
-    pool.connect((err, client, done) => {
-      const query = `SELECT * FROM Messages where senderemail='${request.decoded.email}'`;
-      client.query(query, (error, result) => {
-        done();
-        if (error) {
-          return response.status(500).json({
-            status: 500,
-            error: 'Error getting sent mails',
-          });
-        }
-        return response.status(200).json({
-          status: 200,
-          data: [result.rows],
-        });
+  static async allSentEmails(req, res) {
+    const { id } = req.decoded;
+    const text = `select * from Sent INNER JOIN Messages ON Sent.messageid = messages.id WHERE Sent.senderid = '${id}'`;
+
+    try {
+      const { rows } = await db.query(text);
+
+      return res.status(201).json({
+        status: 201,
+        data: rows,
       });
-    });
+    } catch (error) {
+      return res.status(400).send(error);
+    }
   }
 
   /**
@@ -162,24 +129,47 @@ class MessageController {
    * @returns {json} json
    * @memberof messageController
    */
-  static getSpecificEmail(request, response) {
-    const { messageId } = request.params;
-    pool.connect((err, client, done) => {
-      const query = `SELECT * FROM Messages where id='${messageId}'`;
-      client.query(query, (error, result) => {
-        done();
-        if (error) {
-          return response.status(500).json({
-            status: 500,
-            error: 'Error getting a specific email',
-          });
-        }
-        return response.status(200).json({
-          status: 200,
-          data: result.rows[0],
-        });
+  static async getSpecificEmail(req, res) {
+    const { id } = req.decoded;
+    const { messageid } = req.params;
+    const text = `select * from Messages WHERE messages.id = '${messageid} and receiverid = ${id}`;
+
+    try {
+      const { rows } = await db.query(text);
+
+      return res.status(201).json({
+        status: 201,
+        data: rows,
       });
-    });
+    } catch (error) {
+      return res.status(400).send(error);
+    }
+  }
+
+  /**
+  * @method deleteMessage
+  * @description Delete an email in a user's inbox
+  * @static
+  * @param {object} req - The request object
+  * @param {object} res - The response object
+  * @returns {object} JSON response
+  * @memberof MessageController
+  */
+
+  static async deleteMessage(req, res) {
+    const { id } = req.decoded;
+    const { messageid } = req.params;
+    const text = `select * from Inbox WHERE messageid = '${messageid} and receiverid = ${id}`;
+
+    try {
+      const { rows } = await db.query(text);
+      return res.status(201).json({
+        status: 201,
+        data: rows,
+      });
+    } catch (error) {
+      return res.status(400).send(error);
+    }
   }
 }
 

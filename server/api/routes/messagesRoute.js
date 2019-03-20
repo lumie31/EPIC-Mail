@@ -9,5 +9,6 @@ messageRouter.get('/messages', verifyToken, MessageController.allReceivedEmails)
 messageRouter.get('/messages/unread', verifyToken, MessageController.allUnreadEmails);
 messageRouter.get('/messages/sent', verifyToken, MessageController.allSentEmails);
 messageRouter.get('/messages/:messageId', verifyToken, MessageController.getSpecificEmail);
+messageRouter.delete('/messages/:messageId', verifyToken, MessageController.deleteMessage);
 
 export default messageRouter;
