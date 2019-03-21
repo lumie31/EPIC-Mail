@@ -15,17 +15,16 @@ class MessageController {
    */
   static async sendEmail(req, res) {
     const { email } = req.body;
-    const getReceiverId = 'select * from Users where email=$1';
-    const text = `INSERT INTO
-      Messages(subject, message, senderId, createdOn, receiverId, status)
-      VALUES($1, $2, $3, $4, $5, $6)
-      returning *`;
-    const sentQuery = 'INSERT into Sent(senderId, messageId, createdOn) values($1, $2, $3) returning *';
-    const inboxQuery = 'INSERT into Inbox(receiverId, messageId, createdOn) values($1, $2, $3) returning *';
 
     try {
       await db.query('BEGIN');
+      const getReceiverId = 'select * from Users where email=$1';
       const receiver = await db.query(getReceiverId, [email]);
+      // iif recceive doesn't exist ...
+      const text = `INSERT INTO
+      Messages(subject, message, senderId, createdOn, receiverId, status)
+      VALUES($1, $2, $3, $4, $5, $6)
+      returning *`;
       const { rows } = await db.query(text, [
         req.body.subject,
         req.body.message,
@@ -34,18 +33,24 @@ class MessageController {
         receiver.rows[0].id,
         'sent',
       ]);
+
+      const sentQuery = 'INSERT into Sent(senderId, messageId, createdOn) values($1, $2, $3) returning *';
       await db.query(sentQuery, [rows[0].senderid, rows[0].id, rows[0].createdon]);
+
+      const inboxQuery = 'INSERT into Inbox(receiverId, messageId, createdOn) values($1, $2, $3) returning *';
       await db.query(inboxQuery, [rows[0].receiverid, rows[0].id, rows[0].createdon]);
+
       await db.query('COMMIT');
       return res.status(201).json({
         status: 201,
         data: rows[0],
       });
     } catch (error) {
+      console.log('err', error);
       await db.query('ROLLBACK');
-      return res.status(400).send(error);
+      return res.status(400).json({ error });
     } finally {
-      db.release();
+      // db.release();
     }
   }
 

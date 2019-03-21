@@ -6,6 +6,7 @@ import swaggerDocument from '../swagger.json';
 import routes from './dummyApi/routes';
 import apiRoutes from './api/routes';
 import messageRoutes from './api/routes/messagesRoute';
+import groupRoutes from './api/routes/groupRoutes';
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use('/api/v1', routes.userRouter);
 app.use('/api/v1', routes.messageRouter);
 app.use('/api/v2', apiRoutes);
 app.use('/api/v2', messageRoutes);
+app.use('/api/v2', groupRoutes);
 
 
 app.use((request, response, next) => {
