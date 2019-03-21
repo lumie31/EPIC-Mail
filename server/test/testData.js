@@ -1,0 +1,79 @@
+export const users = [{
+  firstName: '',
+  lastName: 'Doe',
+  email: 'johndoe@gmail.com',
+  password: '12345abc',
+  confirmPassword: '12345abc',
+}, {
+  firstName: 'D',
+  lastName: 'Doe',
+  email: 'johndoe@gmail.com',
+  password: '12345abc',
+  confirmPassword: '12345abc',
+}, {
+  firstName: 'John',
+  lastName: '',
+  email: 'johndoe@gmail.com',
+  password: '12345abc',
+  confirmPassword: '12345abc',
+}, {
+  firstName: 'John',
+  lastName: 'D',
+  email: 'johndoe@gmail.com',
+  password: '12345abc',
+  confirmPassword: '12345abc',
+}, {
+  firstName: 'John',
+  lastName: 'Doe',
+  email: '',
+  password: '12345abc',
+  confirmPassword: '12345abc',
+}, {
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'johndoe123',
+  password: '12345abc',
+  confirmPassword: '12345abc',
+}, {
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'johndoe1@gmail.com',
+  password: '12345abc',
+  confirmPassword: '12345abc',
+}, {
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'johndoe1@gmail.com',
+  password: '123',
+  confirmPassword: '123',
+}, {
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'johndoe1@gmail.com',
+  password: '',
+}, {
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'johndoe1@gmail.com',
+  password: '12345abc',
+  confirmPassword: '123',
+},
+];
+
+export const loginDetails = [{
+  email: '',
+  password: '12345abc',
+}, {
+  email: 'mike',
+  password: '12345abc',
+}, {
+  email: 'johndoe@gmail.com',
+  password: '',
+}, {
+  email: 'maryjane@gmail.com',
+  password: '123456',
+}, {
+  email: 'xyz@mail.com',
+  password: '12345abc',
+},
+];
