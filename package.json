@@ -15,8 +15,7 @@
     "dropTable": "babel-node ./server/api/models/migration dropDatabase",
     "createTable": "node db.js --exit",
     "migrate": "npm run createTable",
-    "build": "babel server --out-dir dist",
-    "heroku-postbuild": "npm run createTable"
+    "build": "babel server --out-dir dist"
   },
   "repository": {
     "type": "git",
