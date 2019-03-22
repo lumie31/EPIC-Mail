@@ -45,7 +45,7 @@ export default class validateUsers {
 
     const rules = {
       email: 'required|email',
-      password: 'required|alpha_num|min:6',
+      password: 'required|alpha_num',
     };
 
     const validation = new Validator(request.body, rules);

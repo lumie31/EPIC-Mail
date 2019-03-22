@@ -59,6 +59,12 @@ class UserController {
         },
       });
     } catch (error) {
+      if (error.code === '23505') {
+        return response.status(400).json({
+          status: 400,
+          error: 'Email already exists',
+        });
+      }
       return response.status(500).json({
         status: 500,
         error,
@@ -85,7 +91,7 @@ class UserController {
       if (!user[0]) {
         return response.status(400).json({
           status: 400,
-          error: 'User does not exist',
+          error: 'Email or Password is Incorrect',
         });
       }
       const pwdOk = compareSync(password, user[0].password);
@@ -98,7 +104,6 @@ class UserController {
           status: 200,
           data: {
             token,
-            email: user[0].email,
           },
         });
       }

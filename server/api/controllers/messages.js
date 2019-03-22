@@ -14,12 +14,24 @@ class MessageController {
    * @memberof messageController
    */
   static async sendEmail(req, res) {
-    const { email } = req.body;
+    const { receiverEmail } = req.body;
 
     try {
       await db.query('BEGIN');
       const getReceiverId = 'select * from Users where email=$1';
-      const receiver = await db.query(getReceiverId, [email]);
+      const receiver = await db.query(getReceiverId, [receiverEmail]);
+      if (receiver.rows.length === 0) {
+        return res.status(400).json({
+          status: 400,
+          error: 'User does not exist',
+        });
+      }
+      if (receiver.rows[0].id === req.decoded.id) {
+        return res.status(400).json({
+          status: 400,
+          error: 'You cannot send a mail to yourself',
+        });
+      }
       // iif recceive doesn't exist ...
       const text = `INSERT INTO
       Messages(subject, message, senderId, createdOn, receiverId, status)
@@ -68,9 +80,8 @@ class MessageController {
 
     try {
       const { rows } = await db.query(text);
-
-      return res.status(201).json({
-        status: 201,
+      return res.status(200).json({
+        status: 200,
         data: rows,
       });
     } catch (error) {
@@ -93,8 +104,8 @@ class MessageController {
     try {
       const { rows } = await db.query(text);
 
-      return res.status(201).json({
-        status: 201,
+      return res.status(200).json({
+        status: 200,
         data: rows,
       });
     } catch (error) {
@@ -117,8 +128,8 @@ class MessageController {
     try {
       const { rows } = await db.query(text);
 
-      return res.status(201).json({
-        status: 201,
+      return res.status(200).json({
+        status: 200,
         data: rows,
       });
     } catch (error) {
@@ -136,18 +147,30 @@ class MessageController {
    */
   static async getSpecificEmail(req, res) {
     const { id } = req.decoded;
-    const { messageid } = req.params;
-    const text = `select * from Messages WHERE messages.id = '${messageid} and receiverid = ${id}`;
+    const messageid = parseInt(req.params.messageid, 10);
+    // const { messageid } = req.params;
+    console.log(typeof messageid);
+
+
+    const text = `select * from Messages WHERE id = '${messageid}'`;
 
     try {
       const { rows } = await db.query(text);
-
-      return res.status(201).json({
-        status: 201,
+      if (rows[0].senderid !== id && rows[0].receiverid !== id) {
+        return res.status(401).json({
+          status: 401,
+          error: 'You are not authorized to view this email',
+        });
+      }
+      return res.status(200).json({
+        status: 200,
         data: rows,
       });
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json({
+        status: 400,
+        error: 'Message does not exist',
+      });
     }
   }
 
@@ -163,17 +186,29 @@ class MessageController {
 
   static async deleteMessage(req, res) {
     const { id } = req.decoded;
-    const { messageid } = req.params;
-    const text = `select * from Inbox WHERE messageid = '${messageid} and receiverid = ${id}`;
-
+    // const messageid = parseInt(req.params.messageid, 10);
+    // const { messageid } = req.params;
+    // const text = `delete * from Inbox WHERE messageid = '${messageid} and receiverid = ${id}`;
+    const text = `delete * from Inbox INNER JOIN Messages ON Inbox.messageid = messages.id WHERE Inbox.receiverid = '${id}'`;
+    // const text = `delete * from Messages WHERE id = '${messageid}'`;
     try {
       const { rows } = await db.query(text);
-      return res.status(201).json({
-        status: 201,
+      console.log(rows);
+      if (rows[0].senderid !== id && rows[0].receiverid !== id) {
+        return res.status(401).json({
+          status: 401,
+          error: 'You are not authorized to delete this email',
+        });
+      }
+      return res.status(200).json({
+        status: 200,
         data: rows,
       });
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json({
+        status: 400,
+        error,
+      });
     }
   }
 }

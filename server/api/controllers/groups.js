@@ -42,7 +42,7 @@ class GroupController {
         error: 'Internal server error',
       });
     } finally {
-      db.release();
+      // db.release();
     }
   }
 
