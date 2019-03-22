@@ -89,20 +89,3 @@ CREATE TABLE Sent(
 };
 // export default { pool };
 createTables();
-
-
-// static async deleteMessage(req, res) {
-//   const { id } = req.decoded;
-//   const { messageid } = req.params;
-//   const text = `delete * from Inbox INNER JOIN Messages ON Inbox.messageid WHERE messageid = '${messageid}' and receiverid = ${id}`;
-
-//   try {
-//     const { rows } = await db.query(text);
-//     return res.status(200).json({
-//       status: 200,
-//       data: rows,
-//     });
-//   } catch (error) {
-//     return res.status(400).send(error);
-//   }
-// }
